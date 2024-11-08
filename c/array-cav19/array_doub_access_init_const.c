@@ -1,3 +1,4 @@
+#include <klee/klee.h>
 extern void abort(void);
 extern void __assert_fail(const char *, const char *, unsigned int, const char *) __attribute__ ((__nothrow__ , __leaf__)) __attribute__ ((__noreturn__));
 void reach_error() { __assert_fail("0", "array_doub_access_init_const.c", 3, "reach_error"); }
@@ -12,6 +13,10 @@ int main()
   int N=100000;
   int a[2*N+2];
 
+  klee_make_symbolic(&N, sizeof(N), "N");
+  assume_abort_if_not(N > 0 && N <= 100000); 
+  klee_make_symbolic(&a, sizeof(a), "a");
+  
   for(i=0;i<=N;i++) {
     a[2*i]=0;
     a[2*i+1]=0;
