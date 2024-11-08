@@ -1,3 +1,5 @@
+#include <klee/klee.h>
+
 extern void abort(void);
 extern void __assert_fail(const char *, const char *, unsigned int, const char *) __attribute__ ((__nothrow__ , __leaf__)) __attribute__ ((__noreturn__));
 void reach_error() { __assert_fail("0", "array_tiling_poly6.c", 3, "reach_error"); }
@@ -14,6 +16,9 @@ int main()
   long long i;
   long long a[S];
 
+  klee_make_symbolic(&s, sizeof(b), "s");
+  klee_make_symbolic(&a, sizeof(b), "a");
+  
   for(i=0;i<S;i++)
     a[i]=((i-1)*(i+1));
 

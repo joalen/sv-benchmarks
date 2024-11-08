@@ -1,3 +1,5 @@
+#include <klee/klee.h>
+
 extern void abort(void);
 extern void __assert_fail(const char *, const char *, unsigned int, const char *) __attribute__ ((__nothrow__ , __leaf__)) __attribute__ ((__noreturn__));
 void reach_error() { __assert_fail("0", "array_init_both_ends_multiple_sum.c", 3, "reach_error"); }
@@ -13,6 +15,10 @@ int main()
   int b[N];
   int i;
   int sum=0;
+  
+  klee_make_symbolic(&N, sizeof(N), "N");
+  klee_make_symbolic(&a, sizeof(a), "a");
+  klee_make_symbolic(&b, sizeof(b), "b");
   
   for (i=0;i<N;i++) {
     a[i] = i;

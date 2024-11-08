@@ -1,3 +1,5 @@
+#include <klee/klee.h>
+
 extern void abort(void);
 extern void __assert_fail(const char *, const char *, unsigned int, const char *) __attribute__ ((__nothrow__ , __leaf__)) __attribute__ ((__noreturn__));
 void reach_error() { __assert_fail("0", "array_init_nondet_vars.c", 3, "reach_error"); }
@@ -14,6 +16,9 @@ int main()
   int n=__VERIFIER_nondet_int();
   assume_abort_if_not(n < 100000);
   int a[n];
+
+  klee_make_symbolic(&N, sizeof(N), "N");
+  klee_make_symbolic(&a, sizeof(a), "a");
 
   assume_abort_if_not(j>0 && j < 10000);
  

@@ -1,3 +1,5 @@
+#include <klee/klee.h>
+
 extern void abort(void);
 extern void __assert_fail(const char *, const char *, unsigned int, const char *) __attribute__ ((__nothrow__ , __leaf__)) __attribute__ ((__noreturn__));
 void reach_error() { __assert_fail("0", "array_init_pair_symmetr2.c", 3, "reach_error"); }
@@ -14,6 +16,11 @@ int main()
   int a[N];
   int b[N];
   int c[N];
+
+  klee_make_symbolic(&N, sizeof(N), "N");
+  klee_make_symbolic(&a, sizeof(a), "a");
+  klee_make_symbolic(&b, sizeof(b), "b");
+  klee_make_symbolic(&c, sizeof(c), "c");
 
   for(i=0;i<N;i++) {
     int x=__VERIFIER_nondet_int();

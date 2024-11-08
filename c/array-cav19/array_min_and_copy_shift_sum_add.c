@@ -1,3 +1,5 @@
+#include <klee/klee.h>
+
 extern void abort(void);
 extern void __assert_fail(const char *, const char *, unsigned int, const char *) __attribute__ ((__nothrow__ , __leaf__)) __attribute__ ((__noreturn__));
 void reach_error() { __assert_fail("0", "array_min_and_copy_shift_sum_add.c", 3, "reach_error"); }
@@ -17,6 +19,12 @@ int main()
   assume_abort_if_not(N < 10000 && N > -10000);
   int a[N+1];
   int b[N];
+
+  klee_make_symbolic(&N, sizeof(N), "N");
+  klee_make_symbolic(&j, sizeof(j), "j");
+  klee_make_symbolic(&k, sizeof(k), "k");
+  klee_make_symbolic(&a, sizeof(a), "a");
+  klee_make_symbolic(&b, sizeof(b), "b");
 
   for(i=0;i<N;i++) {
     assume_abort_if_not(a[i] < 10000 && a[i] > -10000);
