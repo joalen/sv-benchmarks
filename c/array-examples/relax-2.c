@@ -88,6 +88,8 @@ _pat_ is a relaxed prefix of any suffix of _a_.
 
 extern void abort(void);
 #include <assert.h>
+#include <klee/klee.h> 
+
 void reach_error() { assert(0); }
 
 void __VERIFIER_assert(int cond) {
@@ -136,6 +138,9 @@ int main()
   //int pat[]={1,2,4};
   //int a[]={1,3,2,3};
 
+  klee_make_symbolic(pat, sizeof(int)*pat_len, "PAT");
+  klee_make_symbolic(a, sizeof(int)*a_len, "A");
+  
   for (int j = 0; j < pat_len; j++) {
     pat[j] = __VERIFIER_nondet_int();
   }

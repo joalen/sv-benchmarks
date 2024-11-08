@@ -9,19 +9,23 @@ void __VERIFIER_assert(int cond) { if(!(cond)) { ERROR: {reach_error();abort();}
 extern long __VERIFIER_nondet_long(void);
 void *malloc(unsigned int size);
 
-long SIZE;
-
 const int MAX = 100000;
 
 int main()
 {
-	SIZE = __VERIFIER_nondet_long();
+
+	long SIZE;
+    klee_make_symbolic(&SIZE, sizeof(SIZE), "SIZE");
+    klee_assume(SIZE > 1 && SIZE < MAX);
+
 	if(SIZE > 1 && SIZE < MAX)
 	{
 		int i;
 		long *a = malloc(sizeof(long)*SIZE);
 		long sum=0;
 
+		klee_make_symbolic(a, sizeof(long)*SIZE, "array_contents");
+		
 		for(i = 0; i < SIZE; i++ )
 		{
 			a[i] = 1;

@@ -1,5 +1,7 @@
 extern void abort(void);
 #include <assert.h>
+#include <klee/klee.h> 
+
 void reach_error() { assert(0); }
 extern int __VERIFIER_nondet_int(void);
 void __VERIFIER_assert(int cond) { if(!(cond)) { ERROR: {reach_error();abort();} } }
@@ -11,6 +13,8 @@ int main ( ) {
   int marker = __VERIFIER_nondet_int();
   int pos = __VERIFIER_nondet_int();
 	
+  klee_make_symbolic(&a, sizeof(a), "a");
+  
 	for(int i = 0; i < N; i++) 
 	{
 	  a[i] = __VERIFIER_nondet_int();

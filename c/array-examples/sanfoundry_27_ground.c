@@ -1,5 +1,7 @@
 extern void abort(void);
 #include <assert.h>
+#include <klee/klee.h> 
+
 void reach_error() { assert(0); }
 void __VERIFIER_assert(int cond) { if(!(cond)) { ERROR: {reach_error();abort();} } }
 extern int __VERIFIER_nondet_int();
@@ -15,6 +17,8 @@ int main()
     int array[SIZE];
     int i;
 			
+    klee_make_symbolic(array, sizeof(array), "ARRAY");
+
 		for(i = 0; i < SIZE; i++) 
 		{
 		  array[i] = __VERIFIER_nondet_int();

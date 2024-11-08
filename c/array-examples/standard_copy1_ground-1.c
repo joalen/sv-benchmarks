@@ -11,6 +11,10 @@ int main( ) {
   int a2[N];
 
   int a;
+
+  klee_make_symbolic(&a1, sizeof(a1), "a1");
+  klee_make_symbolic(&a2, sizeof(a2), "a2");
+  
   for ( a = 0 ; a < N ; a++ ) {
       a1[a] = __VERIFIER_nondet_int();
   }

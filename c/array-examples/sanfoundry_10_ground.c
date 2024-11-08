@@ -4,6 +4,9 @@ void reach_error() { __assert_fail("0", "sanfoundry_10_ground.c", 3, "reach_erro
 void __VERIFIER_assert(int cond) { if(!(cond)) { ERROR: {reach_error();abort();} } }
 extern int __VERIFIER_nondet_int();
 
+
+#include <klee/klee.h> 
+
 /*
  * Adapted from http://www.sanfoundry.com/c-programming-examples-arrays/
  * C program to accept an array of integers and delete the
@@ -17,6 +20,9 @@ int main()
     int element = __VERIFIER_nondet_int();
     int found = 0;
     int vectorx[n];
+
+    klee_make_symbolic(element, sizeof(element), "ELEMENT");
+    klee_make_symbolic(vectorx, sizeof(vectorx), "VECTORX");
 
 		for(i = 0; i < n; i++) 
 		{

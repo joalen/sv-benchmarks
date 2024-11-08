@@ -1,4 +1,4 @@
-
+#include <klee/klee.h>
 
 
 extern void abort(void);
@@ -33,6 +33,9 @@ int main ()
   int ret;
   int ret2;
   int ret5;
+
+  klee_make_symbolic(&x, sizeof(x), "x");
+  klee_make_symbolic(&temp, sizeof(temp), "temp");
 
   for (int i = 0; i < 10000; i++) {
     x[i] = __VERIFIER_nondet_int();

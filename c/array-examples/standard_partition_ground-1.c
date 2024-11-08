@@ -1,5 +1,7 @@
 extern void abort(void);
 #include <assert.h>
+#include <klee/klee.h> 
+
 void reach_error() { assert(0); }
 extern int __VERIFIER_nondet_int(void);
 void __VERIFIER_assert(int cond) { if(!(cond)) { ERROR: {reach_error();abort();} } }
@@ -14,6 +16,10 @@ int main( ) {
   int bb[N];
   int cc[N];
   
+  klee_make_symbolic(&aa, sizeof(aa), "aa");
+  klee_make_symbolic(&bb, sizeof(bb), "bb");
+  klee_make_symbolic(&cc, sizeof(cc), "cc");
+
   while( a < N ) {
     aa[ a ] = __VERIFIER_nondet_int();
     if( aa[ a ] >= 0 ) {

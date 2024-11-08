@@ -3,6 +3,8 @@
 
 extern void abort(void);
 #include <assert.h>
+#include <klee/klee.h>
+
 void reach_error() { assert(0); }
 extern int __VERIFIER_nondet_int();
 
@@ -24,6 +26,10 @@ int main ()
   int ret;
   int ret2;
   int ret5;
+
+
+  klee_make_symbolic(&x, sizeof(x), "x");
+  klee_make_symbolic(&temp, sizeof(temp), "temp");
 
   for (int i = 0; i < N; i++) {
     x[i] = __VERIFIER_nondet_int();

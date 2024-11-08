@@ -1,3 +1,5 @@
+#include <klee/klee.h> 
+
 extern void abort(void);
 extern void __assert_fail(const char *, const char *, unsigned int, const char *) __attribute__ ((__nothrow__ , __leaf__)) __attribute__ ((__noreturn__));
 void reach_error() { __assert_fail("0", "zero_sum_m4.c", 3, "reach_error"); }
@@ -12,12 +14,17 @@ short SIZE;
 
 int main()
 {
-	SIZE = __VERIFIER_nondet_short();
+	short SIZE;
+    klee_make_symbolic(&SIZE, sizeof(SIZE), "SIZE");
+    klee_assume(SIZE > 1);
+
 	if(SIZE > 1)
 	{
 		int i;
 		short a[SIZE];
 		long long sum=0;
+		
+		klee_make_symbolic(a, sizeof(short)*SIZE, "array_contents");
 		
 		for(int i = 0; i < SIZE; i++) 
 		{
