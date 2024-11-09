@@ -1,0 +1,9 @@
+/* Contributed by: Vladimír Štill, https://divine.fi.muni.cz
+   Description: A simple test of a pthread-based barrier.
+*/
+
+#include "barrier.h"
+
+#define CNT 2
+#include <klee/klee.h>
+#include "barrier_test.h"
