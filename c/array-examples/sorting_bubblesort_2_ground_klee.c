@@ -1,0 +1,45 @@
+extern void abort(void);
+#include <assert.h>
+#include <klee/klee.h> 
+
+void reach_error() { assert(0); }
+void __VERIFIER_assert(int cond) { if(!(cond)) { ERROR: {reach_error();abort();} } }
+extern int __VERIFIER_nondet_int();
+
+#define N 100000
+
+int main( ) {
+  int a[ N ];
+	
+  klee_make_symbolic(&a, sizeof(a), "a");
+  
+	for(int j = 0; j < N; j++)
+	{
+	  a[j] = __VERIFIER_nondet_int();
+	}
+  int swapped = 1;
+  while ( swapped ) {
+    swapped = 0;
+    int i = 1;
+    while ( i < N ) {
+      if ( a[i] > a[i-1] ) {
+        int t = a[i];
+        a[i] = a[i - 1];
+        a[i-1] = t;
+        swapped = 1;
+      }
+      i = i + 1;
+    }
+  }
+  
+  int x;
+    klee_make_symbolic(&x, sizeof(int), "x");
+  int y;
+    klee_make_symbolic(&y, sizeof(int), "y");
+  for ( x = 0 ; x < N ; x++ ) {
+    for ( y = x+1 ; y < N ; y++ ) {
+      __VERIFIER_assert(  a[x] <= a[y]  );
+    }
+  }
+  return 0;
+}

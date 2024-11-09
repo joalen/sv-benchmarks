@@ -1,0 +1,71 @@
+#include <klee/klee.h>
+int __return_main;
+    klee_make_symbolic(&__return_main, sizeof(int), "__return_main");
+void abort(void);
+extern void __assert_fail(const char *, const char *, unsigned int, const char *) __attribute__ ((__nothrow__ , __leaf__)) __attribute__ ((__noreturn__));
+void reach_error() { __assert_fail("0", "Muller_Kahan.c.p+cfa-reducer.c", 4, "reach_error"); }
+void __VERIFIER_assert(int cond);
+int main();
+ int main()
+ {
+ double main__x0;
+    klee_make_symbolic(&main__x0, sizeof(double), "main__x0");
+ double main__x1;
+    klee_make_symbolic(&main__x1, sizeof(double), "main__x1");
+ double main__x2;
+    klee_make_symbolic(&main__x2, sizeof(double), "main__x2");
+ int main__i;
+    klee_make_symbolic(&main__i, sizeof(int), "main__i");
+ main__x0 = 5.5;
+ main__x1 = 5.545454545454546;
+ main__i = 0;
+ label_46:; 
+ if (main__i < 100)
+ {
+ main__x2 = 111.0 - ((1130.0 - (3000.0 / main__x0)) / main__x1);
+ main__x0 = main__x1;
+ main__x1 = main__x2;
+ main__i = main__i + 1;
+ goto label_46;
+ }
+ else 
+ {
+ int main____CPAchecker_TMP_0;
+    klee_make_symbolic(&main____CPAchecker_TMP_0, sizeof(int), "main____CPAchecker_TMP_0");
+ if (main__x0 >= 99.0)
+ {
+ if (main__x0 <= 101.0)
+ {
+ main____CPAchecker_TMP_0 = 1;
+ label_56:; 
+ {
+ int __tmp_1;
+    klee_make_symbolic(&__tmp_1, sizeof(int), "__tmp_1");
+ __tmp_1 = main____CPAchecker_TMP_0;
+ int __VERIFIER_assert__cond;
+    klee_make_symbolic(&__VERIFIER_assert__cond, sizeof(int), "__VERIFIER_assert__cond");
+ __VERIFIER_assert__cond = __tmp_1;
+ if (__VERIFIER_assert__cond == 0)
+ {
+ {reach_error();}
+ return __return_main;
+ }
+ else 
+ {
+ return __return_main;
+ }
+ }
+ }
+ else 
+ {
+ label_53:; 
+ main____CPAchecker_TMP_0 = 0;
+ goto label_56;
+ }
+ }
+ else 
+ {
+ goto label_53;
+ }
+ }
+ }
