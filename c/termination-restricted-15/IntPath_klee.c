@@ -1,0 +1,24 @@
+#include <klee/klee.h>
+typedef enum {false,true} bool;
+
+extern int __VERIFIER_nondet_int(void);
+
+int main() {
+    int i;
+    int x;
+    klee_make_symbolic(&x, sizeof(int), "x");
+    int y;
+    klee_make_symbolic(&y, sizeof(int), "y");
+    i = __VERIFIER_nondet_int();
+    x = 0;
+    y = 0;
+    
+    if (i > 10) {
+        x = 1;
+    } else {
+        y = 1;
+    }
+    while (x == y) { }
+    
+    return 0;
+}

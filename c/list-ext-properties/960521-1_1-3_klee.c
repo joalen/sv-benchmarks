@@ -1,0 +1,44 @@
+extern void abort(void);
+#include <assert.h>
+void reach_error() { assert(0); }
+
+#include <klee/klee.h>
+#include <stdlib.h>
+
+int *a, *b;
+int n;
+    klee_make_symbolic(&n, sizeof(int), "n");
+
+extern int __VERIFIER_nondet_int(void);
+
+void foo()
+{
+  int i;
+    klee_make_symbolic(&i, sizeof(int), "i");
+  for (i = 0; i < n; i++)
+    a[i] = -1;
+  for (i = 0; i < n - 1; i++)
+    b[i] = -1;
+}
+
+int main()
+{
+  n = 1;
+
+  while(__VERIFIER_nondet_int() && n < 30) {
+    n++;
+  }
+
+  a = malloc(n * sizeof(*a));
+  b = malloc(n * sizeof(*b));
+
+  *b++ = 0;
+  foo();
+
+  if (b[-1])
+  { free(a); free(b); } /* invalid free (b was iterated) */
+  else
+  { free(a); free(b); } /* ditto */
+
+  return 0;
+}
