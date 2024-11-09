@@ -1,3 +1,5 @@
+#include <klee/klee.h> 
+
 int __return_main;
 void abort(void);
 extern void __assert_fail(const char *, const char *, unsigned int, const char *) __attribute__ ((__nothrow__ , __leaf__)) __attribute__ ((__noreturn__));
@@ -13,6 +15,11 @@ int __return_60;
  main__marker = __VERIFIER_nondet_int();
  int main__pos;
  main__pos = __VERIFIER_nondet_int();
+
+ klee_make_symbolic(&main__a, sizeof(main__a), "main__a");
+ klee_make_symbolic(&main__marker, sizeof(main__marker), "main__marker");
+ klee_make_symbolic(&main__pos, sizeof(main__pos), "main__pos");
+
 
 	for(int i = 0; i < 100000; i++) 
 	{
